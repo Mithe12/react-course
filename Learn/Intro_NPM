@@ -1,0 +1,26 @@
+? What is Package ? : One or more modules that are program agnostic. it means can be reused in the your application.
+? What is module ? : Module exports functions that abstracts any internal mechanism
+
+? Why we need package manager ?
+    ~ In earlier days, We use <script> tags to import pacakge that is hosted in CDN or in file systesm.
+    - Scalability issue: 
+        - if CDN crashes our app also will be crashed
+        - Order of <script> tags matters if package has depenedency to other packages. 
+        - Versioning Problem, we need to change the version in the <script> tag
+    ~ NPM package manager solves the all the issues.
+
++ Intialize the Project for NPM: npm init. Once done we will have package.json and node_modules folder.
+? what is node_modules contain ? source code for the package will be placed inside node_modules.
+? what is package.json contain ? contains all meta information and list of packages that your app needs to run 
+? what is dependencies property ? contains package that app needs to run.
+? what is devDependencies property ? contains package that app needs to run during development.
+? what is scripts property in package.json ? Used to automate the task, we need to be in same director as package.json and run "npm run [Name of the Script]".
+? what is npm install ? will download and install the package 
+? How to install packages ? use "npm install [package-name] [optional: --save-dev]. Optional flag is to append the package in dev-dependencies only.
+    eg: npm install react
+    eg: npm install webpack --save-dev
+
+? How versioning of package works in package.json ? Major.Minor.patch
+    [^ - install newest version of package with same major version and latest minor or patch version]
+    [~ - install newest version of package with same major and minor version and latest patch version]
+
