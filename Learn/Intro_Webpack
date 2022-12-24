@@ -1,0 +1,160 @@
+? why does webpack exists ? 
+    ~ Webpack is a module bundler. It examines all modules in your application, transforms the code, creates dependency graph and then intelligently puts all of them together into one or more bundles that "index.html" file can refer.
+
+? What problem is webpack solving ?
+    ~ Using <script> tag to add modules are error-prone such forgotting the file and typos.
+    ~ Modules should be in correct order if they have dependency with another module in <script> tag.
+    ~ module bundling solves both the problem by examing all module, transforming the code, creating dependecy graph and placing all the related codes in thier respective bundle.
+
+? How to install webpacks ?
+    ~ npm install webpack webpack-cli --save-dev
+
+? How to configure webpacks ?
+    ~ we need "webpack.config.js" file that exports an object. This object contains all webpack configurations.
+
+    //webpack.config.js
+    module.exports = {
+        // this is where all the config will be placed.
+    };
+
+    ~ Webpack basically need 3 things: 
+        1. What is the Entry point of your app ?
+        2. What are all transformations we need ?
+        3. What is the output file and directory that bundle should be placed ?
+
+    ~ ENTRYPOINT:
+        ~ If our app is composed of modules, there will always be a single module that is entry point to your app.
+        ~ Usually it will be index.js. 
+        ~ From the file, we can easily explore the dependencies by examining the "imports/require" and create dependency graph.
+
+        //webpack.config.js
+        module.exports = {
+            // define the entry point to our app
+            entry: "app/index.js",
+        }
+
+    ~ TRANSFORMATION WITH LOADERS:
+        ~ By default, JSON and JS Files will be examined for creating dependency graph.
+        ~ Ideally, we need to examine CSS, SVG, Images, SAAS ...etc (whatever our app has) for creating dependency graph.
+
+            import auth from "./api/auth.js";                   // default 
+            import config from "./utils/config.json";           // defaule
+            import "./styles.css";                              // to process css imports we need to use loaders
+            import logo from "./assests/logo.svg";              // to process svg imports we need to use loaders  
+
+
+        ~ To do that, we need to "download" and "add the respective loader" in webpack.config.js and package.json file 
+        ~ we need to define loader(how to process) for each files types
+        ~ In the rules, we need to define "test" and "use". (i.e) if you find a file ending at this, use this loader
+            
+            //webpack.config.js
+            module.exports = {
+                // entry point to our app and creating dependency graph.
+                entry: "app/index.js",
+                module: {
+                    rules: [
+                        {test: ..., use: ...}, 
+                        {test: ..., use: ...}
+                    ]
+                }
+            } 
+
+        ~ SVG LOADER: we can process import ().svg 
+            ~ install and add to package.json
+                npm install svg-inline-loader --save-dev
+            ~ add the rules
+                {
+                    test: /\.svg$/, 
+                    use: "svg-inline-loader"
+                }
+
+        ~ CSS LOADER and STYLE LOADER: 
+            ~ CSS loader will process imports with css file and Style loader will inject that CSS into DOM.
+            ~ We need to use arrays and processing order will reverse.
+
+            ~ install and add to package.json
+                npm install css-loader --save-dev
+                npm install style-loader --save-dev
+            ~ add rules:
+                {
+                    test: /\.css$/,
+                    use: ["style-loader",css-loader"]
+                }
+
+        ~ BABEL Loader: Transform modern JS to browser JS
+
+            ~ npm install babel-loader --save-dev
+            ~ add rules:
+            {
+                test: /\.(js)$/,
+                use: "babel-loader"
+            }
+
+    ~ OUTPUT: we need to tell webpack to name of the bundle and the location where bundle need to be saved.
+
+        const path = require("path);
+        module.exports = {
+            entry: "app/index.js", // entry point 
+            module: {
+                rules: [
+                    {test: "", use: ""}; // define the loaders
+                ]
+            },
+            output:{ // where the bundle need to be saved and its name
+                path: path.resolve(_dirname, "dist"),
+                filename: "index_bundle.js"
+            }
+        }
+
+    ~ PLUGINS: 
+        ~ Loader works on individual files before or while bundle is being generated.
+        ~ Plugins allow to execute certain task after the bundle is created.
+
+        ~ HTMLWebpackPlugin: It will generate "index.html" and save it in the directory where bundle is created and also all the "index.html" include the <script> tag with reference to bundle name.
+
+        ~ npm install html-webpack-plugin --save-dev
+        ~ we need to created a new instance inside our plugin array.
+
+    ~ MODE: Used to tell what is the environment we are on
+
+    ~ npm install webpack webpack-cli --save-dev
+    ~ npm install svg-inline-loader --save-dev
+    ~ npm install css-loader --save-dev
+    ~ npm install style-loader --save-dev
+    ~ npm install babel-loader --save-dev
+    ~ npm install html-webpack-plugin --save-dev
+    ~ npm install webpack-dev-server -save-dev
+
+    ~ webpack.config.js:
+        const path = require("path");
+        const HtmlWebpackPlugin = require("html-webpack-plugin)
+        module.exports = {
+
+            entry: "app/index.js",
+            module: {
+                rules: [
+                    { test: /\.svg$/, use: "svg-inline-loader" },
+                    { test: /\.css$/, use: ["style-loader", "css-loader"] },
+                    { test: /\.(js)$/, use: "babel-loader" },
+                ],
+            },
+            output: { // where bundle needs to placed
+                path: path.resolve(__dirname,"dist"),
+                filename: "index_bundle.js"
+            },
+            plugins: [new HtmlWebpackPlugin()], // do things after module is created
+            mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+        }
+
+RUNNING WEBPACK:
+    ~ In package.json, we need to add webpack in the script and name it as build, 
+    ~ whenever we run "npm run build", webpack pack will create a optimized bundle and place it in dist folder.
+        
+        "scripts":{
+            "build":"NODE_ENV='production' webpack", // Production build
+            "start": "webpack-dev-server" 
+        }
+    
+    ~ webpack-dev-server:
+        ~ Instead of generating 'dist' folder, it will keep track of things in memory and server them via local server.
+        ~ Supports live reloading
