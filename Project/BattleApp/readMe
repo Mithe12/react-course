@@ -15,4 +15,22 @@
 11. WE need to take index.html, copy it and place it in dist folder with reference of index_bundle.js as <script> tag.
     // we need to use HtmlWebpackplugin and mention where index.html is located.
 12. Support hot-reloading, webpack-dev-server
+
+/* Rendering the list */
+
+1. Created a "Popular" class component and export it as default.
+2. we only render method in the class.
+3. we need to render UI with drop-down, To do that we can use map().
+
+/* Managing the State */
+1. we need to define the constructor() so that we can get "state" props.
+2. Inside the constructor(), we need to "define the object for the state".
+3. we need to define updateLanguage that "updates object in the state".
+4. we need to "bind" updateLanguage in the constructor to "this" object.
+5. Finally, we need to do capture onChange event and then trigger updateLanguage method and set the "selected"
+6. Display the result of state in the UI as test
+
+Note: when user click the option, it will trigger the updateLanguage method that will update the state property "selectedLanguage". Since state is changed, React will render UI and it will use "selectedLanguage" to show the options and tick mark in the UI.
+
+
     
