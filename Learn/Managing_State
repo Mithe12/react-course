@@ -1,0 +1,38 @@
+~ Its important that Components should have ability to manage their own state.
+
+? How to add the state to React component ?
+
+    class HelloWorld extends React.component {
+        constructor(props){
+            super(props);
+            this.state = {name: "Mithe"};
+        }
+        render(){
+            return <h1> {this.state.name} </h1>
+        }
+    }
+
+    ~ By adding "state" property on the component instance ("this").
+    ~ we can access the "state property" via this.state anywhere in class.
+
+? How to update the state to React component ? 
+    ~ Whenever state of component changes, React will re-invoke the render method and update the DOM.
+    ~ If we update the state directly, react wont update the DOM.
+        this.state.name = "Mi".
+    ~ If we update the state using "setState" API, React will update DOM.
+    ~ setState lives on component instance and it has 2 forms.
+    
+        ~ 1. accepts an object as argument.
+            this.setState( { name: newName } );
+
+        ~ 2. accepts function as argument.
+            this.setState( 
+                (state) => {
+                    return {
+                        friends: state.friends.concat(newFriend)
+                    }
+                })
+    ~ function setState() vs Object setState 
+        ~ If you are updating current state based on prev state use function. Otherwise use Object.
+
+    ~ Note: state updates are async
