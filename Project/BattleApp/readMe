@@ -22,7 +22,7 @@
 2. we only render method in the class.
 3. we need to render UI with drop-down, To do that we can use map().
 
-/* Managing the State */
+/* Steps: Managing the State */
 1. we need to define the constructor() so that we can get "state" props.
 2. Inside the constructor(), we need to "define the object for the state".
 3. we need to define updateLanguage that "updates object in the state".
@@ -32,5 +32,21 @@
 
 Note: when user click the option, it will trigger the updateLanguage method that will update the state property "selectedLanguage". Since state is changed, React will render UI and it will use "selectedLanguage" to show the options and tick mark in the UI.
 
+/* Functional Components */
+1. If your component take props and render UI based on props, then we can use functional components.
+2. function HelloWorld(props){
+        return <div> {props} </div>
+    } 
+NOTE: In the code, The functional components doesn't contain business logic, we are telling functional components "what to do" (declarative) instead of "How to do" (imperative). We are passing the current state of the language and the function to change the state. Parent component will contain the business logic and then pass the state and function to change the state to child component. State management will be handled by parent component.
 
-    
+/* Proptypes - Type check */
+    - we need to make sure props that passed to components are right type. --> Predictable 
+    - we need to attach "propTypes" property to components that accept props.
+    - "propTypes" property has a object that contains props and its data type.
+    - Warning will be showed if not right type in the console. (Failed PropTypes)
+    - we need to import PropTypes from "prop-types"
+
+STEPS:
+    1. Install npm install prop-types 
+    2. Import the PropTypes from the "prop-types"
+    3. Attach propTypes to the LanguagesNav Components. 
