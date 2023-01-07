@@ -1,6 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { fetchPopularRepos } from '../utils/api';
+import Table from './Table';
 
 // we are passing the current state and function that changes the state.
 // Here state is handled by parent component -- declarative thinking
@@ -81,7 +82,7 @@ export default class Popular extends React.Component {
                  </div>
                 
                 { error && <p className = "text-center error">{error}</p> }
-                { repos && <pre> {JSON.stringify(this.state, null, 2)} </pre>}
+                { repos && <Table repos = {repos} />}
     
             </main>
         );

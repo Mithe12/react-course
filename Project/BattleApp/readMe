@@ -129,3 +129,12 @@ STEPS:
     5. Inside updateLanguage, we need to call fetchRepos that return promise, and if the promise is success, set the repos and error to null or else catch the error and set only error value in the state.
     6. Finally, based on the state, update the UI
 
+    1. Create a Table Component, that is functional component and don't have state and define the PropTypes for it.
+    2. We need to create TableHead Component and TabeRow Component. In the table body, for every repos, we need to create tableRow Component.
+    3. TableHead Component, we define the Head names for it in the componet.
+    4. TableRow Component, we destructe only neccessary data from repo and build UI for that and include propTypes.
+    5. Finally import Table Component in Popular.js and pass the repos to it .
+
+
+/* Controlled vs UnControlled */
+
