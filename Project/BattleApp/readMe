@@ -40,13 +40,92 @@ Note: when user click the option, it will trigger the updateLanguage method that
 NOTE: In the code, The functional components doesn't contain business logic, we are telling functional components "what to do" (declarative) instead of "How to do" (imperative). We are passing the current state of the language and the function to change the state. Parent component will contain the business logic and then pass the state and function to change the state to child component. State management will be handled by parent component.
 
 /* Proptypes - Type check */
-    - we need to make sure props that passed to components are right type. --> Predictable 
-    - we need to attach "propTypes" property to components that accept props.
-    - "propTypes" property has a object that contains props and its data type.
-    - Warning will be showed if not right type in the console. (Failed PropTypes)
-    - we need to import PropTypes from "prop-types"
+    1. we need to make sure props that passed to components are right type. --> Predictable 
+    2. we need to attach "propTypes" property to components that accept props.
+    3. "propTypes" property has a object that contains props and its data type.
+    4. Warning will be showed if not right type in the console. (Failed PropTypes)
+    5. we need to import PropTypes from "prop-types"
 
 STEPS:
     1. Install npm install prop-types 
     2. Import the PropTypes from the "prop-types"
     3. Attach propTypes to the LanguagesNav Components. 
+
+/* Component Life Cycle */
+
+GENERAL:
+    1. Componens core responsibility 
+        - Manage their own state.
+        - Recieve data via props.
+        - Describe thier UI based on state.
+    2. In more complex application, Components need to take more responsibilites such as
+        - Ajax Request
+        - Setting and removing listeners
+
+LIFE CYCLE OF COMPONENTS: 
+    1. MOUNTING: When Components gets added to DOM.
+
+        ~ Usual Things need to occur on Mounting phase
+            - Setting up initial state for the component.
+                + constructor() 
+            - Rendering the DOM element for the component.
+                + render() = its pure function, only examine state and props and return a UI description.
+            - Make AJAX Request.
+                + ComponentDidMount() = invoked only once when component is first mounted to DOM
+            - Setting up listeners (websockets / Firebase)
+                + ComponentDidMount()
+
+    2. UPDATING: When Components updates its state or recieve new data via props.
+
+        ~ Usual Things need to occur on UPDATING phase
+            - Re-render UI with updated state or props.
+                - render() = When even the state or props updated, render() will be called again
+            - Re-fecting data. (we need to refetch the data without re-mounting the component)
+                - ComponentDidUpdate(prevProps, prevState):
+                    - Method will be invoked after the component state or props changes.
+                    - With 2 args, it allows to compare prevState/props with currentState/props and do something on it
+            - Re-setting data.
+                - ComponentDidUpdate(prevProps,prevState)
+
+    3. UnMounting: When Components gets removed from DOM.
+        - Removing Listeners/ Clean up actions = ComponentWillUnmount()
+
+
+    class App extends React.Component {
+
+        constructor(props){
+            // Good for establishing initial state of a component
+            super(props)
+            this.state = {}
+        }
+
+        componentDidMount(){
+            // Invoked once the component is mounted to DOM
+            // Good for making AJAX request
+        }
+        
+        componentDidUpdate(){
+            // Invoked immediately after updating occurs
+            // Good for AJAX request based on changing props
+            // or DOM Operations
+        }
+
+        componentWillUnmount(){
+            // Called right before a component is unmounted.
+            // Good for cleaning up listeners
+        }
+
+        render(){
+            // pure function - based on state describe UI
+        }
+    }
+
+STEPS: 
+    1. Create api.js in util folder, call the github endpoint for the languages.
+        - the fetch will get the response, then get the data from the response objec, if data contains item return it.
+    2. Import the fetchPopular Repo in the Popular.jsx
+    3. we need to call fetchPopularRepos when the component is mount also we need to call it whenever user changes the language, so we need to place the fetching logic in updateLanguage (we can use whenever user changes the langugae) and we use updateLanguage in componentDidMount (when first time its mounted)
+    4. Also, we need to update the state object to include, repo infomration and error information
+    5. Inside updateLanguage, we need to call fetchRepos that return promise, and if the promise is success, set the repos and error to null or else catch the error and set only error value in the state.
+    6. Finally, based on the state, update the UI
+
