@@ -138,3 +138,20 @@ STEPS:
 
 /* Controlled vs UnControlled */
 
+1. Forms without React: The Form state lives inside DOM, and whenever you need it, grab it from DOM. --> Uncontrolled
+2. Forms With React: Form state lives inside React Components --> Controlled Components
+
+/* Battle App */
+
+1. Create a Root Component called as Battle and define the state (PlayerOne and PlayerTwo)
+2. we have 3 Parts for Battle Component:
+    - Define the Battle Button 
+    - Define Section with playerInput form (Update the Root Component state)
+    - Define the Instrunctions Components
+3. We need to define the playerInput Form as the Class becos its going to have state and we will be passing props from Root Component to this.
+    - Since its a form, we are having a state called "username" and onSubmit and onChange.
+    - OnChange will pass the event. Using the event get the value and update the state.
+    - OnSubmit will pass the event, Using that prevent default and call the root onSubmit to change the root state.
+4. Root Component, we need to define the function that changes the state and create higherorder function which smartly updates the state.
+
+
