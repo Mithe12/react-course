@@ -154,4 +154,5 @@ STEPS:
     - OnSubmit will pass the event, Using that prevent default and call the root onSubmit to change the root state.
 4. Root Component, we need to define the function that changes the state and create higherorder function which smartly updates the state.
 
-
+5. When we press "Battle" button, we need to show the result component with user information.
+    - we need to create battle boolean in state object, initially we need to set to false, when we press battle button, we will update the battle state to true. React api will re-render the UI object, it will render the Result component.
