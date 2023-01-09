@@ -156,3 +156,7 @@ STEPS:
 
 5. When we press "Battle" button, we need to show the result component with user information.
     - we need to create battle boolean in state object, initially we need to set to false, when we press battle button, we will update the battle state to true. React api will re-render the UI object, it will render the Result component.
+
+6. Update the api.js to include the calc repos and create Result component that shows thw winner.
+
+7.
