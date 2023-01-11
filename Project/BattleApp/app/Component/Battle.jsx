@@ -149,7 +149,7 @@ export default class Battle extends React.Component{
         return (
             <main className = "stack main-stack animate-in">
                 <div className = "split">
-                    <pre> {JSON.stringify(this.state, null, 2)}</pre>
+                    
                     <h1> Players </h1>
                     <button onClick = { () => {
                         this.setState({

@@ -255,3 +255,12 @@ STEPS:
         }> Settings </Link>
     </nav>
 
+STEPS: 
+1. Install react-router-dom via npm and restart the server.
+2. In config, we need to include publicPath in output object(what is public path is) and we need to tell devServer that we have client side router that is going to redirect all the request to index page
+3. Define the browserROuter, Routes and Route in the app.js. We include the ability to map url to component. 
+4. Need to define a way to navigate through the URL. Create a NavBar Component where navigation between component/url is possible
+    - In Nav Component, we import "NavLink" not the "Link". NavLink will allow change the style when its highlight, active on hover
+    - Final import the Nav Component in the App
+
+5. We need to have Dark/Light Theming for the app, so we need to have state (theme) property in the app and define the updater function to change the theme state. we also need to have capabilites to update theme in Navbar also, so we need to path the state and updater function to the child component.
