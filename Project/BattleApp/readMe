@@ -159,4 +159,99 @@ STEPS:
 
 6. Update the api.js to include the calc repos and create Result component that shows thw winner.
 
-7.
+/* Higher Order Components*/
+
+1. Functions are first-class components = we can pass/return functions as argument and store it as well.
+    
+    function add(x,y){
+        return x + y;
+    }
+
+    function addFive(x,addReference){
+        return addReference(x,5)
+    }
+
+    addFive(10,add)
+
+2. Callback function which is passed as argument and Higher-order function accepting the callback.
+3. If we want to create addTen(), addTwo() we need to create as many of them that is like addFive.
+4. Goal: We need to create many "adder Functions" with minimizing code duplication.
+
+    function makeAdder(x,addReference){
+        return function (y){
+            return addReference(x,y);
+        };
+    }
+
+NOTE:this concept of having a function with multiple parameters return a new function with fewer parameters is called "Partial Application
+
+5. Higher-order components return a new component that renders the callback component.
+
+    function higherOrderFunction(callbackFn){
+        return function() {
+            return callbackFn();
+        }
+    }
+
+    function higherOrderComp(callbackComp){
+        return class extends React.Component {
+            render(){
+                return <callbackComp />;
+            }
+        };
+    }
+
+6. Disadvantage: Inversion of control . its related to props naming collision.
+
+STEPS:
+ 1. Build a info component in Hoc. The info component will be having hovering state and based on that it will show the tool tip. Now if the another component want to see the tooltip, we need to do the same (i.e) keeping hovering state in that component based on that we will call the tool-tip. You can see the same logic is using in every component, This is the downfall, lots of duplicate code.
+
+ 2.Our High-order components, should encapsualte the hoviering login in it and then passing the hovering state to the comp it renders.
+ It will prevent the duplication of same logic. const InfoWithHover = withHover(Info)
+
+ 3. We need to design HOC to avoid naming collision, sometime the component will have the differnet property name so we need to pass the property name to the HOC and HOC will map the current state to that propName and pass all the props to the callback component.
+
+ 4. Design the basic tooltip component with hovering logic in it. We need to wrap the component that needs this logic. For tooltip, we need to pass children and element ( that will be rendered when the hovering state is true) 
+
+ 5. Refractor the toottip component. The Hovering logic can be placed on HOC called withHover. Tooltip will get children and props and then we pass that the withHover and then return the component with hovering logic
+
+ /* Render props - To avoid code duplication */
+
+ 1. Passing Function as Props. We pass function to the Wrapper component that renders the orginal component based on the condition.
+
+    <Hover render = { (hovering) => <Info hovering = {hovering}>}>
+    {this.props.render(this.state.hovering)}  
+
+STEPS:
+1. we need to create a components(info, trendCharts) that needs to render something if the hovering state is true.
+2. we need to create a Hover Component, with the hovering state and a function that changes it. Hover component accepts function as part of props. 
+3. Finally, we need to create a connector component that uses this pattern.
+
+
+/* React Router - instead of UI primites, it provide routing primitives */
+
+<BrowserRouter> = uses History library (to keep track of browsing history) and React Context (make history avail anywhere React Router needs it).we need to wrap the app inside the component.
+    <BrowserRouter> 
+        <App />
+    <BrowserRouter />
+<Route> = Allows map app's location to different react component.
+<Routes> = Understand all its children Route elements and smartly chose which one are best to render.
+
+    <Routes>
+        <Route path = "/" element = {<Home/>} />
+        <Route path = "/about" element = {<About />}>
+    </Routes>
+
+<Link> = path user will be taking when clicked. "to" props to pass the path. we can have complex objects aswell
+
+    <nav>
+        <Link to = "/"> Home </Link>
+        <Link to  = {
+            {
+                pathname: "/settings",
+                search: "?sort=date"
+                state: { fromHome: true},     
+            }
+        }> Settings </Link>
+    </nav>
+
