@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom/client';
 import './index.css';
 import Popular from './Component/Popular';
 import Battle from './Component/Battle';
-import { Info } from './Component/Hoc';
+import Results from './Component/Results';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Nav from './Component/Nav';
 
@@ -36,6 +36,7 @@ class App extends React.Component {
               <Routes>
                 <Route path = "/" element ={<Popular/> } />
                 <Route path = "/battle" element = {<Battle />} />
+                <Route path = "/results" element = {<Results />} />
               </Routes>
           </div>
         </div>

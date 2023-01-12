@@ -2,6 +2,8 @@ import * as React from 'react';
 import { battle } from '../utils/api';
 import PropTypes from 'prop-types';
 import Loading from './Loading';
+import withSearchParams from './withSearchParams';
+
 
 function Card({ profile }) {
     const {
@@ -64,7 +66,7 @@ function Card({ profile }) {
     }).isRequired,
   };
 
-export default class Results extends React.Component {
+class Results extends React.Component {
 
     constructor(props){
         super(props);
@@ -77,7 +79,10 @@ export default class Results extends React.Component {
     }
     
     componentDidMount(){
-        const { playerOne, playerTwo } = this.props;
+        const searchParams = this.props.router.searchParams;
+        const playerOne = searchParams.get('playerOne');
+        const playerTwo = searchParams.get('playerTwo');
+
         battle([playerOne, playerTwo])
             .then((players) => {
                 this.setState({
@@ -134,3 +139,5 @@ export default class Results extends React.Component {
         );
     }
 }
+
+export default withSearchParams(Results);

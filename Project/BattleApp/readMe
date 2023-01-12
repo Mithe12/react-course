@@ -264,3 +264,20 @@ STEPS:
     - Final import the Nav Component in the App
 
 5. We need to have Dark/Light Theming for the app, so we need to have state (theme) property in the app and define the updater function to change the theme state. we also need to have capabilites to update theme in Navbar also, so we need to path the state and updater function to the child component.
+
+
+/* Query String */
+
+1. Allows to pass the state via URL and its shareable ( copy and paste the url and it would work)
+
+STEPS: 
+1. In our battle app, the battle button is not query string we dont have state and its not shareable, instead of button we need to use link with query string in that way we can make it shareable.
+
+2. we need to create a link that sends the playerinformation as query string to the Result component. The Result component will query backend and get the information.
+    - Change the Battle component button to link and pass the query string
+    - Define results components path inside router component.
+    - Since we use query string for Result component to pass the state, we dont require to get the state from props, we ned to remove it or we get undefined error from props. 
+    - To get the state from URL for Result components, in React v6 we need to use "useSearchParam" hooks to get the query string value from react-router. However, class component dont support hooks we need to create HOC that wraps hooks and use HOC to fetch the information.
+    - Create withSearchParam as HOC. check the implemenetation
+    - Use withSearchParam in the result component. instead of getting playerOne and playerTwo value from props get it frm router.searchParams and to have those props for your componenet we need to export the HOC passing component to that.
+

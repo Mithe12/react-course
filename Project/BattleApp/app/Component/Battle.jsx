@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {close} from "./icons";
 import PropTypes from "prop-types";
-import Results from "./Results";
+import { Link } from 'react-router-dom';
 
 function Instructions(){
     return(
@@ -140,22 +140,21 @@ export default class Battle extends React.Component{
     // render the UI based on the state
     render(){
         // destruct the state and use to describe the state of the UI
-        const { playerOne, playerTwo, battle } = this.state;
+        const { playerOne, playerTwo } = this.state;
         const disabled = !playerOne || !playerTwo 
-        if(battle === true){
-            return <Results playerOne = {playerOne} playerTwo = {playerTwo} />    
-        }
+      
 
         return (
             <main className = "stack main-stack animate-in">
                 <div className = "split">
                     
                     <h1> Players </h1>
-                    <button onClick = { () => {
-                        this.setState({
-                            battle:true
-                        })
-                    }} className = {`btn primary ${disabled ? "disabled": ""}`}> Battle</button>
+                    <Link 
+                        to = {{
+                            pathname: "/results",
+                            search: `?playerOne=${playerOne}&playerTwo=${playerTwo}`,
+                        }}
+                        className = {`btn primary ${disabled ? "disabled": ""}`}> Battle</Link>
                 </div>
                 <section className = "grid">
                     {playerOne === null ? (
