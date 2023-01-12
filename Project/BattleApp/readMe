@@ -337,5 +337,16 @@ STEPS:
 
     12. *** we can split the app by its routes, but we can also split the app by its components. We need to figure out which components in your app can hold off downloading until user needs them. 
 
+/ * Production grade code deployment */
 
-
+1. React development mode is significantly larger and slower than react in production mode. 
+2. Create React App : Use "npm run build". Will create a build directory with prod build of the app and you can take that directory and deploy it to production.
+3. Custom Webpack Build: We need to tell webpack to run in production mode.
+    - we need to update package.json scripts
+        - For dev: npm run dev
+        - For Prod: npm run build
+    - we need to update webpack.config.js for the below mode
+        mode: process.env.NODE_ENV === 'production'
+            ? 'production'
+            : 'development'
+4. Include the hosting provide (vercel) configuration
