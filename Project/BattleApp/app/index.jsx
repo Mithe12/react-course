@@ -1,11 +1,13 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import './index.css';
-import Popular from './Component/Popular';
-import Battle from './Component/Battle';
-import Results from './Component/Results';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Nav from './Component/Nav';
+import Loading from "./Component/Loading";
+
+const Popular =  React.lazy(() => import('./Component/Popular'));
+const Battle = React.lazy(() => import('./Component/Battle'));
+const Results = React.lazy(() => import('./Component/Results'));
 
 // eslint-disable-next-line react/prefer-stateless-function
 class App extends React.Component {
@@ -33,11 +35,13 @@ class App extends React.Component {
         <div className= {this.state.theme}>
           <div className="container">
               <Nav theme = {this.state.theme} toggleTheme = {this.toggleTheme}/>
-              <Routes>
-                <Route path = "/" element ={<Popular/> } />
-                <Route path = "/battle" element = {<Battle />} />
-                <Route path = "/results" element = {<Results />} />
-              </Routes>
+              <React.Suspense fallback = {<Loading />} >
+                <Routes>
+                  <Route path = "/" element ={<Popular/> } />
+                  <Route path = "/battle" element = {<Battle />} />
+                  <Route path = "/results" element = {<Results />} />
+                </Routes>
+              </React.Suspense>
           </div>
         </div>
       </Router>

@@ -281,3 +281,61 @@ STEPS:
     - Create withSearchParam as HOC. check the implemenetation
     - Use withSearchParam in the result component. instead of getting playerOne and playerTwo value from props get it frm router.searchParams and to have those props for your componenet we need to export the HOC passing component to that.
 
+/* Class Fields */
+
+- allows to add instance properties to class without use of constructor method.
+- How we can improve the below class to better readable way. Check the ImproveClass.jsx
+- DownSide: Performance issue. not by react by the ES6 ways
+
+/* Code Splitting - Dont download the code until you need it */
+
+    1. Larger the app becomes, larger the bundle size will be and will take longer and more resources to download it.
+    2. Code Splitting feature allows users to download only piece of code they needed instead of all the code.
+    3. If your user is only registering then user don't need to have a module for settings.
+    4. Code Spliiting, we can dynamically import the modules based on some condition.
+
+            if( editingPost === true){
+                import * as edit from './editPost'
+                edit.showEditor()
+            }
+            
+    5. Its inclued is ES2020 Spec, and its supported by defaule with "Create React App". If buidling without CRA then we need to manually install and configure.
+    6. How it works ? import typically return Promise.
+        - we use the "import" as function that returns a promise and promise will resolve the module once the module is completed loaded.
+
+            if(editingPost === true){
+                import('./editPist')
+                    .then((module) => module.showEditor())
+                    .catch( (e) => "ShowErrir")
+            }
+    
+    7. React.lazy(): Takes in a single args, a function that invokes dynamic import, and return regular react component.
+
+    8. Normal import returns Promise, React.lazy imports React component
+
+        const LazyComponent = React.lazy(
+            () => import('./Home')
+        )
+
+        ..
+
+        <LazyComponent />
+    
+    9. Until we can <LazyComponent /> react wont import the required modules.
+
+    10. *** React.lazy() with React Router, wont load the component until user visit the certain "path"
+
+        - Remember: Since Dynamic imports are async, React.lazy() will need to wait till the component is loaded. During that time, we need show something to user. To do that, React "Suspense" component is available.
+
+    11. React.Suspense component, need to pass fallback element. react can take multiple, lazily loaded components while still only rendering one fallback element.
+
+        const Settings = React.lazy( () => import(./Settings))
+
+        <React.Suspense fallback = {<Loading />}>
+            <Setting />
+        </React.Suspense>
+
+    12. *** we can split the app by its routes, but we can also split the app by its components. We need to figure out which components in your app can hold off downloading until user needs them. 
+
+
+
